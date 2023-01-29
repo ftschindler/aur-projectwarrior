@@ -1,0 +1,20 @@
+pkgbase = projectwarrior
+	pkgdesc = A tool to guide a user through a thorough weekly review in the GTD format.
+	pkgver = 0.3.2
+	pkgrel = 1
+	url = https://github.com/jonathanabennett/projectwarrior
+	install = projectwarrior.install
+	arch = x86_64
+	license = MIT
+	makedepends = quicklisp
+	makedepends = sbcl
+	source = https://github.com/jonathanabennett/projectwarrior/archive/refs/tags/v0.3.2.tar.gz
+	source = project.sh
+	source = projectwarrior.install
+	source = sbclrc
+	sha256sums = b99a450df6fcfd8cd0731c98055720397fc9e2b163785c5978b04f4ae95b7e1a
+	sha256sums = f86c01f4db3c97c26f57854e418c11bfac94588764ae78c8e523c902e309117f
+	sha256sums = 0856a3130509f1410185c85172cc28ac525e321dd40c03a3b10140aeb0a79321
+	sha256sums = 55f0a43e79aa754015c1d0c78627a79cc12d883e40965e4b660b61af59531086
+
+pkgname = projectwarrior

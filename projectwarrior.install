@@ -1,0 +1,12 @@
+post_install()
+{
+  echo "+-----------------------------------------------------+"
+  echo "|                                                     |"
+  echo "| projectwarrior stores everything in ~/.projects     |"
+  echo "| make sure to execute                                |"
+  echo "|   mkdir -p ~/.projects                              |"
+  echo "|   touch ~/.projects/projects.txt                    |"
+  echo "|   touch ~/.projects/{active,completed,deleted}.json |"
+  echo "|                                                     |"
+  echo "+-----------------------------------------------------+"
+}
