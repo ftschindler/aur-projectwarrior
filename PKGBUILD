@@ -2,7 +2,7 @@
 
 pkgname=projectwarrior
 pkgver=0.3.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A tool to guide a user through a thorough weekly review in the GTD format."
 arch=('x86_64')
 url="https://github.com/jonathanabennett/projectwarrior"
@@ -14,9 +14,9 @@ source=('https://github.com/jonathanabennett/projectwarrior/archive/refs/tags/v0
         'projectwarrior.install'
         'sbclrc')
 sha256sums=('b99a450df6fcfd8cd0731c98055720397fc9e2b163785c5978b04f4ae95b7e1a'
-            '4d43ed8506ff55e45cce852d2eb25d35a9a96e7bf1d2229df55e88769ee5cfad'
-            '09872180fb87aefa125edb49bb1d69eacc6220f16193b693959d1a8b83129d79'
-            'e2b9f2f07cfeaea5ec663ef780d24f7ad1a7825744ed820f77249aa24f624aaa'
+            '7857705bba951affe532b7f8c7ba151250ebcfb23290b08f054382902b0aa118'
+            'a13f9e4dbbb274e9c9994aae3da049e5f1ecf0654ea5edc93e9b6eace430639c'
+            '718561839de90534ffa0b6d03e00c31b165cf555086f3fd0d570ecec858b4467'
             '55f0a43e79aa754015c1d0c78627a79cc12d883e40965e4b660b61af59531086')
 install='projectwarrior.install'
 
@@ -24,38 +24,16 @@ install='projectwarrior.install'
 # see also https://www.timmons.dev/posts/static-executables-with-sbcl.html.
 # My undesirable quickfix is to build the actual executable in-place after
 # installing everything to /usr/share/projectwarrior.
-# We also build everything here to pacman will correctly associate all files we
-# created with this package.
-
-# I cound not find a way to reliably deal with quicklisp (automated install
-# and loading on sbcl startup), that did not depend on absolute file pathes.
-# My workaround is to use a persistent tmp dir as HOME to switch into when
-# compiling, where we are sure of all locations.
-_backuphome="${HOME}"
-_fakehome="$(mktemp -d /tmp/aur-${pkgname}.XXXXXX)"
-
-prepare() {
-  # required workaround, see above
-  export HOME=${_fakehome}
-  # in this home, we can be sure to be the first to install, so this should not fail
-  sbcl --disable-debugger --load '/usr/share/quicklisp/quicklisp.lisp' --eval '(quicklisp-quickstart:install)' --quit
-  # similarly, we are sure of the install location of quicklisp within that home
-  # and can use our shipped .sbclrc
-  cp "${srcdir}/sbclrc" "${HOME}/.sbclrc"
-}
 
 build() {
-  # required workaround, see above
-  export HOME=${_fakehome}
-  cd ${srcdir}/${pkgname}-${pkgver}
-  make build
-  export HOME=${_backuphome}
+  echo "build is deferred to post install :/"
 }
 
 package() {
   mkdir -p "${pkgdir}/usr/share/${pkgname}"
   cp -ra "${srcdir}/${pkgname}-${pkgver}" "${pkgdir}/usr/share/${pkgname}/src"
+  touch "${pkgdir}/usr/share/${pkgname}/src/projectwarrior"
   install -D -m 644 sbclrc "${pkgdir}/usr/share/${pkgname}/sbclrc"
   install -D -m 755 build-projectwarrior.sh "${pkgdir}/usr/share/${pkgname}/build-projectwarrior.sh"
-  install -D -m 755 project.sh "${pkgdir}/usr/bin/project"
+  install -D -m 755 project.sh "${pkgdir}/usr/share/${pkgname}/project.sh"
 }

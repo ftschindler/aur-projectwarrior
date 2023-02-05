@@ -1,4 +1,4 @@
 post_install()
 {
-  /usr/share/projectwarrior/build-projectwarrior.sh
+  echo "Execute /usr/share/projectwarrior/build-projectwarrior.sh for each intended user!"
 }
